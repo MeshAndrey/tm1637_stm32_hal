@@ -1,0 +1,2 @@
+# 1 Rewrite for best performance
+# 2 Must work with higher freq.
