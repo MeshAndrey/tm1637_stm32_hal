@@ -7,15 +7,15 @@
 #define CLK_PORT_CLK_ENABLE __HAL_RCC_GPIOC_CLK_ENABLE
 #define DIO_PORT_CLK_ENABLE __HAL_RCC_GPIOC_CLK_ENABLE
 
-void _tm1637Start(void);
-void _tm1637Stop(void);
-void _tm1637ReadResult(void);
-void _tm1637WriteByte(uint8_t b);
-void _tm1637DelayUsec(uint32_t i);
-void _tm1637ClkHigh(void);
-void _tm1637ClkLow(void);
-void _tm1637DioHigh(void);
-void _tm1637DioLow(void);
+static void _tm1637Start(void);
+static void _tm1637Stop(void);
+static void _tm1637ReadResult(void);
+static void _tm1637WriteByte(uint8_t b);
+static void _tm1637DelayUsec(uint32_t i);
+static void _tm1637ClkHigh(void);
+static void _tm1637ClkLow(void);
+static void _tm1637DioHigh(void);
+static void _tm1637DioLow(void);
 void tm1637Init(void);
 void tm1637DisplayDecimal(uint32_t v, uint8_t displaySeparator);
 void tm1637SetBrightness(uint8_t brightness);
@@ -72,7 +72,7 @@ void tm1637SetBrightness(uint8_t brightness)
     _tm1637Stop();
 }
 
-void _tm1637Start(void)
+static void _tm1637Start(void)
 {
     _tm1637ClkHigh();
     _tm1637DioHigh();
@@ -113,7 +113,7 @@ void tm1637DisplayDecimal(uint32_t v, uint8_t displaySeparator)
     _tm1637Stop();
 }
 
-void _tm1637Stop(void)
+static void _tm1637Stop(void)
 {
     _tm1637ClkLow();
     _tm1637DelayUsec(2);
@@ -124,7 +124,7 @@ void _tm1637Stop(void)
     _tm1637DioHigh();
 }
 
-void _tm1637ReadResult(void)
+static void _tm1637ReadResult(void)
 {
     _tm1637ClkLow();
     _tm1637DelayUsec(5);
@@ -134,7 +134,7 @@ void _tm1637ReadResult(void)
     _tm1637ClkLow();
 }
 
-void _tm1637WriteByte(uint8_t b)
+static void _tm1637WriteByte(uint8_t b)
 {
     /*
     for example b = 0b1001 (9d):
@@ -162,7 +162,7 @@ void _tm1637WriteByte(uint8_t b)
     }
 }
 
-void _tm1637DelayUsec(uint32_t i)
+static void _tm1637DelayUsec(uint32_t i)
 {
     for (; i>0; i--) 
     {
@@ -178,22 +178,22 @@ void _tm1637DelayUsec(uint32_t i)
     }
 }
 
-void _tm1637ClkHigh(void)
+static void _tm1637ClkHigh(void)
 {
     HAL_GPIO_WritePin(CLK_PORT, CLK_PIN, GPIO_PIN_SET);
 }
 
-void _tm1637ClkLow(void)
+static void _tm1637ClkLow(void)
 {
     HAL_GPIO_WritePin(CLK_PORT, CLK_PIN, GPIO_PIN_RESET);
 }
 
-void _tm1637DioHigh(void)
+static void _tm1637DioHigh(void)
 {
     HAL_GPIO_WritePin(DIO_PORT, DIO_PIN, GPIO_PIN_SET);
 }
 
-void _tm1637DioLow(void)
+static void _tm1637DioLow(void)
 {
     HAL_GPIO_WritePin(DIO_PORT, DIO_PIN, GPIO_PIN_RESET);
 }
